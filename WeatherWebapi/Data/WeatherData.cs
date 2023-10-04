@@ -10,6 +10,7 @@ namespace WeatherWebapi.Data
     {
         public string Location { get; set; }
         public DateTime Time { get; set; }
+        public string TimeString { get; set; }
         public string Wind { get; set; }
         public string Visibility { get; set; }
         public string SkyCondition { get; set; }
@@ -29,6 +30,7 @@ namespace WeatherWebapi.Data
         {
             Location = $"{response.name} ({response.coord.lat}, {response.coord.lon})";
             Time = _ConvertTimeIntToDateTime(response.timezone);
+            TimeString = _ConvertDateTimeToTimeString(Time);
             Wind = $"{response.wind.speed} m/s, {response.wind.deg} degree";
             Visibility = $"{response.visibility} m";
             SkyCondition = $"{response.weather.FirstOrDefault().main} - {response.weather.FirstOrDefault().description}";
@@ -46,6 +48,11 @@ namespace WeatherWebapi.Data
             date = date.AddSeconds(timeInt);
 
             return date;
+        }
+
+        private string _ConvertDateTimeToTimeString(DateTime date)
+        {
+            return date.ToString("dd MMMM yyyy, HH:mm");
         }
 
         private double _RoundTwoDecimalPlace(double value)

@@ -80,12 +80,12 @@
                     method: "GET",
                     success: function (data) {
                         $("#location").text(`Location: ${data.location}`);
-                        $("#time").text(`Time: ${data.time}`);
+                        $("#time").text(`Time: ${data.timeString}`);
                         $("#wind").text(`Wind: ${data.wind}`);
                         $("#visibility").text(`Visibility: ${data.visibility}`);
                         $("#skyCondition").text(`Sky Condition: ${data.skyCondition}`);
-                        $("#temperature").text(`Temperature: ${data.temperature}`);
-                        $("#dewPoint").text(`Dew Point: ${data.dewPoint}`);
+                        $("#temperature").text(`Temperature: ${data.temperatureC} °C`);
+                        $("#dewPoint").text(`Dew Point: ${data.dewPointC} °C`);
                         $("#relativeHumidity").text(`Relative Humidity: ${data.relativeHumidity}`);
                         $("#pressure").text(`Pressure: ${data.pressure}`);
                     },
