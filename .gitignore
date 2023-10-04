@@ -1,3 +1,12 @@
 .vs/
 WeatherWebapi/bin/Debug/
 WeatherWebapi/obj/
+
+*.suo
+.vs/WeatherWebapi/v17/.suo
+WeatherWebapi/obj/Debug/netcoreapp3.1/WeatherWebapi.assets.cache
+WeatherWebapi/obj/project.assets.json
+WeatherWebapi/obj/project.nuget.cache
+WeatherWebapi/obj/WeatherWebapi.csproj.nuget.dgspec.json
+WeatherWebapi/obj/WeatherWebapi.csproj.nuget.g.props
+WeatherWebapi/obj/WeatherWebapi.csproj.nuget.g.targets
