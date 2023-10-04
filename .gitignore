@@ -10,3 +10,4 @@ WeatherWebapi/obj/project.nuget.cache
 WeatherWebapi/obj/WeatherWebapi.csproj.nuget.dgspec.json
 WeatherWebapi/obj/WeatherWebapi.csproj.nuget.g.props
 WeatherWebapi/obj/WeatherWebapi.csproj.nuget.g.targets
+*.cache
