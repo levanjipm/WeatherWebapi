@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Cryptography;
 using WeatherWebapi.Models.Response;
-using static WeatherWebapi.Models.Response.WeatherResponse;
 
 namespace WeatherWebapi.Data
 {
@@ -31,7 +29,7 @@ namespace WeatherWebapi.Data
             Location = $"{response.name} ({response.coord.lat}, {response.coord.lon})";
             Time = _ConvertTimeIntToDateTime(response.timezone);
             TimeString = _ConvertDateTimeToTimeString(Time);
-            Wind = $"{response.wind.speed} m/s, {response.wind.deg} degree";
+            Wind = $"{response.wind.speed} m/s {_DegreesToDirection(response.wind.deg)}";
             Visibility = $"{response.visibility} m";
             SkyCondition = $"{response.weather.FirstOrDefault().main} - {response.weather.FirstOrDefault().description}";
             TemperatureC = _RoundTwoDecimalPlace(response.main.temp - 273.15);
@@ -40,6 +38,18 @@ namespace WeatherWebapi.Data
             DewPointC = _RoundTwoDecimalPlace(TemperatureC - ((100 - RelativeHumidity) / 5));
             DewPointF = _RoundTwoDecimalPlace(TemperatureF - (9 / 25 * (100 - RelativeHumidity)));
             Pressure = response.main.pressure;
+        }
+
+        private string _DegreesToDirection(int degrees)
+        {
+            string[] directions = { "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW" };
+            double degreesPerDirection = 360.0 / directions.Length;
+            int index = (int)Math.Round(degrees % 360 / degreesPerDirection);
+            if (index < 0)
+            {
+                index += directions.Length;
+            }
+            return directions[index];
         }
 
         private DateTime _ConvertTimeIntToDateTime(int timeInt)

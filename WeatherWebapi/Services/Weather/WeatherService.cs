@@ -1,17 +1,16 @@
-﻿using Microsoft.VisualBasic;
-using Newtonsoft.Json;
-using System.Net.Http;
+﻿using Newtonsoft.Json;
 using System.Threading.Tasks;
 using WeatherWebapi.Data;
 using WeatherWebapi.Models.Response;
+using WeatherWebapi.Services.HttpClientWrapper;
 
 namespace WeatherWebapi.Services.Weather
 {
     public class WeatherService : IWeatherService
     {
-        private readonly HttpClient httpClient;
+        private readonly IHttpClientWrapper httpClient;
 
-        public WeatherService(HttpClient httpClient)
+        public WeatherService(IHttpClientWrapper httpClient)
         {
             this.httpClient = httpClient;
         }
@@ -26,6 +25,11 @@ namespace WeatherWebapi.Services.Weather
             }
 
             var weatherResponse = JsonConvert.DeserializeObject<WeatherResponse>(response);
+            if (weatherResponse == null)
+            {
+                return null;
+            }
+
             WeatherData weatherData = new WeatherData(weatherResponse);
 
             return weatherData;

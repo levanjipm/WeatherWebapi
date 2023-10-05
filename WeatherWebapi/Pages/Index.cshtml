@@ -36,8 +36,6 @@
 @section scripts {
     <script>
         $(document).ready(function () {
-            var apiKey = "b0b4f3cecfe622820a33d2ff7faceadd";
-
             // Populate the country dropdown on page load
             $.ajax({
                 url: "/api/country/countries",
@@ -53,7 +51,9 @@
             // Handle country selection
             $("#countryDropdown").change(function () {
                 var selectedCountryId = $(this).val();
-                $("#cityDropdown").empty();
+
+                // Reset the cityDropdown to the default value
+                $("#cityDropdown").children().not(":first").remove();
 
                 if (selectedCountryId !== "") {
                     // Retrieve cities for the selected country
@@ -72,35 +72,37 @@
 
             // Handle city selection and fetch weather data
             $("#cityDropdown").change(function () {
-                var selectedCity = $("#cityDropdown option:selected").text();
+                if ($("#cityDropdown").val() != '') {
+                    var selectedCity = $("#cityDropdown option:selected").text();
 
-                // Fetch weather data
-                $.ajax({
-                    url: "/api/weather/city/" + selectedCity,
-                    method: "GET",
-                    success: function (data) {
-                        $("#location").text(`Location: ${data.location}`);
-                        $("#time").text(`Time: ${data.timeString}`);
-                        $("#wind").text(`Wind: ${data.wind}`);
-                        $("#visibility").text(`Visibility: ${data.visibility}`);
-                        $("#skyCondition").text(`Sky Condition: ${data.skyCondition}`);
-                        $("#temperature").text(`Temperature: ${data.temperatureC} °C`);
-                        $("#dewPoint").text(`Dew Point: ${data.dewPointC} °C`);
-                        $("#relativeHumidity").text(`Relative Humidity: ${data.relativeHumidity}`);
-                        $("#pressure").text(`Pressure: ${data.pressure}`);
-                    },
-                    error: function () {
-                        $("#location").text(`Location: N/A`);
-                        $("#time").text(`Time: N/A`);
-                        $("#wind").text(`Wind: N/A`);
-                        $("#visibility").text(`Visibility: N/A`);
-                        $("#skyCondition").text(`Sky Condition: N/A`);
-                        $("#temperature").text(`Temperature: N/A`);
-                        $("#dewPoint").text(`Dew Point: N/A`);
-                        $("#relativeHumidity").text(`Relative Humidity: N/A`);
-                        $("#pressure").text(`Pressure: N/A`);
-                    }
-                });
+                    // Fetch weather data
+                    $.ajax({
+                        url: "/api/weather/city/" + selectedCity,
+                        method: "GET",
+                        success: function (data) {
+                            $("#location").text(`Location: ${data.location}`);
+                            $("#time").text(`Time: ${data.timeString}`);
+                            $("#wind").text(`Wind: ${data.wind}`);
+                            $("#visibility").text(`Visibility: ${data.visibility}`);
+                            $("#skyCondition").text(`Sky Condition: ${data.skyCondition}`);
+                            $("#temperature").text(`Temperature: ${data.temperatureC} °C / ${data.temperatureF} °F`);
+                            $("#dewPoint").text(`Dew Point: ${data.dewPointC} °C / ${data.dewPointF} °F`);
+                            $("#relativeHumidity").text(`Relative Humidity: ${data.relativeHumidity}`);
+                            $("#pressure").text(`Pressure: ${data.pressure}`);
+                        },
+                        error: function () {
+                            $("#location").text(`Location: N/A`);
+                            $("#time").text(`Time: N/A`);
+                            $("#wind").text(`Wind: N/A`);
+                            $("#visibility").text(`Visibility: N/A`);
+                            $("#skyCondition").text(`Sky Condition: N/A`);
+                            $("#temperature").text(`Temperature: N/A`);
+                            $("#dewPoint").text(`Dew Point: N/A`);
+                            $("#relativeHumidity").text(`Relative Humidity: N/A`);
+                            $("#pressure").text(`Pressure: N/A`);
+                        }
+                    });
+                }
             });
         });
     </script>

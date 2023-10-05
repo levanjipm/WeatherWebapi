@@ -8,7 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WeatherWebapi.Services;
+using WeatherWebapi.Services.HttpClientWrapper;
 using WeatherWebapi.Services.Weather;
+using WeatherWebapi.Utility;
 
 namespace WeatherWebapi
 {
@@ -25,7 +28,8 @@ namespace WeatherWebapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddHttpClient<IWeatherService, WeatherService>();
+            services.AddHttpClient<IHttpClientWrapper, HttpClientWrapper>();
+            services.AddScoped<IWeatherService, WeatherService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
